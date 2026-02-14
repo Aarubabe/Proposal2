@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Definitely Not a Dating App</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: #f5f5f5;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .app {
+      width: 360px;
+      height: 620px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      padding: 16px;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .card img {
+      width: 100%;
+      height: 65%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .info {
+      margin-top: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    p {
+      margin-top: 6px;
+      color: #555;
+    }
+
+    .buttons {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    button {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+
+    .nope {
+      background: #ff4d4d;
+      color: white;
+    }
+
+    .like {
+      background: #4caf50;
+      color: white;
+    }
+
+    .final {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .final h1 {
+      font-size: 26px;
+    }
+
+    .final button {
+      margin-top: 20px;
+      width: auto;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 18px;
+      background: #ff4081;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app" id="app"></div>
+
+<script>
+  const profiles = [
+    {
+      name: "YOUR_NAME, 19",
+      bio: "Will absolutely steal your fries and deny it.",
+      img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+    },
+    {
+      name: "YOUR_NAME, 19",
+      bio: "Competitive at mini golf for no reason.",
+      img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d"
+    },
+    {
+      name: "YOUR_NAME, 19",
+      bio: "Remembers the little things. Teases you about them.",
+      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+    },
+    {
+      name: "YOUR_NAME, 19",
+      bio: "Will plan the date. Yes, really.",
+      img: "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7"
+    },
+    {
+      name: "YOUR_NAME, 19",
+      bio: "Lowkey hoping you swipe right.",
+      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
+    }
+  ];
+
+  const app = document.getElementById("app");
+  let index = 0;
+
+  function renderCard() {
+    app.innerHTML = "";
+
+    if (index >= profiles.length) {
+      app.innerHTML = `
+        <div class="final">
+          <h1>Looks like you have a type 😌</h1>
+          <p>So… wanna go out with me?</p>
+          <button onclick="alert('Perfect. I’ll plan it 😉')">
+            Yes ❤️
+          </button>
+        </div>
+      `;
+      return;
+    }
+
+    const p = profiles[index];
+
+    const card = document.createElement("div");
+    card.className = "card";
+
+    card.innerHTML = `
+      <img src="${p.img}" />
+      <div class="info">
+        <h2>${p.name}</h2>
+        <p>${p.bio}</p>
+      </div>
+
+      <div class="buttons">
+        <button class="nope" onclick="swipe(-1)">❌</button>
+        <button class="like" onclick="swipe(1)">❤️</button>
+      </div>
+    `;
+
+    app.appendChild(card);
+  }
+
+  function swipe(dir) {
+    const card = document.querySelector(".card");
+    card.style.transform = `translateX(${dir * 400}px) rotate(${dir * 15}deg)`;
+    card.style.opacity = 0;
+
+    setTimeout(() => {
+      index++;
+      renderCard();
+    }, 300);
+  }
+
+  renderCard();
+</script>
+
+</body>
+</html>
